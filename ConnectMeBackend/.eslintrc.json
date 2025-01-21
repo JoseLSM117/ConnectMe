@@ -1,0 +1,15 @@
+{
+  "extends": "eslint-config-standard-with-typescript",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/space-before-function-paren": "off",
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/quotes": "off"
+  },
+  "ignorePatterns": [
+    "dist",
+    "src/**/*.js"
+  ]
+}
