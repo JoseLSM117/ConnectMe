@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id               String             @id @default(uuid())
+  first_name       String
+  last_name        String
+  email            String             @unique
+  password         String
+  profile_picture  String?
+  create_at        DateTime           @default(now())
+  update_at        DateTime           @updatedAt
+  refresh_token_id String?            @unique
+  status_id        String?            @unique
+  RefreshToken     RefreshToken?      @relation(fields: [refresh_token_id], references: [id])
+  isVerify         Boolean
+  UserStatus       UserStatus?        @relation(fields: [status_id], references: [id])
+  ChatParticipants ChatParticipants[]
+  Messages         Messages[]
+  MessagesReads    MessagesReads[]
+}
+
+model RefreshToken {
+  id    String @id @default(uuid())
+  token String
+  Users Users?
+}
+
+model UserStatus {
+  id     String @id @default(uuid())
+  status String @unique
+  Users  Users?
+}
+
+model Chats {
+  id               String             @id @default(uuid())
+  name             String?
+  is_group         Boolean
+  picture_url      String?
+  create_at        DateTime           @default(now())
+  update_at        DateTime           @updatedAt
+  last_message_id  String?            @unique
+  lastMessage      Messages?          @relation("LastMessageInChat", fields: [last_message_id], references: [id])
+  Messages         Messages[]         @relation("MessagesInChat")
+  ChatParticipants ChatParticipants[]
+
+  @@index([create_at, update_at])
+}
+
+model ChatParticipants {
+  chat_id   String
+  user_id   String
+  joined_at DateTime
+
+  Chats Chats @relation(fields: [chat_id], references: [id], onDelete: Cascade)
+  Users Users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@id([chat_id, user_id])
+}
+
+model Messages {
+  id             String          @id @default(uuid())
+  chat_id        String
+  user_id        String
+  content        String
+  attachment_url String?
+  create_at      DateTime        @default(now())
+  update_at      DateTime        @updatedAt
+  Chats          Chats           @relation("MessagesInChat", fields: [chat_id], references: [id], onDelete: Cascade)
+  LastMessage    Chats?          @relation("LastMessageInChat")
+  Users          Users           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  MessagesReads  MessagesReads[]
+
+  @@index([create_at, update_at])
+}
+
+model MessagesReads {
+  id         String    @id @default(uuid())
+  message_id String
+  user_id    String
+  read_at    DateTime?
+
+  Messages Messages @relation(fields: [message_id], references: [id], onDelete: Cascade)
+  Users    Users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([message_id, user_id])
+}
