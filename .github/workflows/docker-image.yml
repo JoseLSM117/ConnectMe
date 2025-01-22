@@ -15,11 +15,18 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-      
+
+      - name: Install Backend Dependencies
+        working-directory: ./ConnectMeBackend
+        run: npm install      
 
       - name: Run Backend Tests
         working-directory: ./ConnectMeBackend
         run: npm run test
+
+      - name: Install FrontEnd Dependencies
+        working-directory: ./ConnectMeFront
+        run: npm install  
 
       - name: Run Frontend Tests
         working-directory: ./ConnectMeFront
