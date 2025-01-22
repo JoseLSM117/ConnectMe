@@ -1,0 +1,55 @@
+services:
+
+  proxy:
+    image: traefik:v2.11
+    container_name: traefik
+    command: --api.insecure=true --providers.docker
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+  
+  backend:
+    build: 
+      context: ./
+      target: backend-dev
+    environment:
+      DATABASE_URL: postgresql://postgres:123@localhost:5432/ConnectMe?schema=public
+    develop:
+      watch:
+        - path: ./ConnectMeBackend/src
+          action: sync
+          target: /usr/local/app/src
+        - path: ./ConnectMeBackend/package.json
+          action: rebuild
+    labels:
+      traefik.http.routers.backend.rule: Host(`api.localhost`)
+      traefik.http.services.backend.loadbalancer.server.port: 3000
+
+  client:
+    build:
+      context: ./
+      target: client-dev
+    develop:
+      watch:
+        - path: ./ConnectMeFront/src
+          action: sync
+          target: /usr/local/app/src
+        - path: ./ConnectMeFront/package.json
+          action: rebuild
+    labels:
+      traefik.http.routers.client.rule: Host(`localhost`)
+      traefik.http.services.client.loadbalancer.server.port: 5173
+
+  postgresql:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 123
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+
+volumes:
+  pgdata:
