@@ -1,0 +1,35 @@
+name: Docker Image
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+
+      - name: Run Backend Tests
+        working-directory: ./ConnectMeBackend
+        run: npm run test
+
+      - name: Run Frontend Tests
+        working-directory: ./ConnectMeFront
+        run: npm run test
+
+      - name: Build Containers
+        run: docker-compose build
+      
+      - name: Start Containers
+        run: docker-compose up -d
+
+      - name: Stop Containers
+        run: docker-compose down --volumes --remove-orphans
