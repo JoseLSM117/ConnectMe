@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_routes_1 = require("@/user/infraestructure/driving-adapters/routes/user.routes");
 const server_1 = require("./server");
+const user_routes_1 = require("./user/infraestructure/driving-adapters/user.routes");
 (() => {
     main();
 })();
