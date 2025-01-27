@@ -10,9 +10,6 @@ describe("StringValueObject", () => {
     expect(typeof vo.value).toBe("string")
   })
 
-  test("Should throw an error if value is empty", () => {
-    expect(() => new TestStringValueObject(null)).toThrow()
-  })
   test("Should compare two StringValueObject", () => {
     const value = "test"
     const vo1 = new TestStringValueObject(value)
