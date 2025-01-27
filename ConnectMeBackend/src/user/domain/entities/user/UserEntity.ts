@@ -8,7 +8,7 @@ interface PrimitiveData {
   password: string
   profilePicture?: string
 }
-export class User extends EntityRoot<User, PrimitiveData> {
+export class UserEntity extends EntityRoot<UserEntity, PrimitiveData> {
   readonly firstName: UserFirstName
   readonly lastName: UserLastName
   readonly email: UserEmail
@@ -24,12 +24,12 @@ export class User extends EntityRoot<User, PrimitiveData> {
     this.profilePicture = profilePicture
   }
 
-  static create(firstName: UserFirstName, lastName: UserLastName, email: UserEmail, password: UserPassword, profilePicture?: UserProfilePicture): User {
-    return new User({ firstName, lastName, email, password, profilePicture })
+  static create(firstName: UserFirstName, lastName: UserLastName, email: UserEmail, password: UserPassword, profilePicture?: UserProfilePicture): UserEntity {
+    return new UserEntity({ firstName, lastName, email, password, profilePicture })
   }
 
-  static fromPrimitives(plainData: { firstName: string, lastName: string, email: string, password: string, profilePicture?: string }): User {
-    return new User({
+  static fromPrimitives(plainData: { firstName: string, lastName: string, email: string, password: string, profilePicture?: string }): UserEntity {
+    return new UserEntity({
       firstName: new UserFirstName(plainData.firstName),
       lastName: new UserLastName(plainData.lastName),
       email: new UserEmail(plainData.email),
