@@ -7,7 +7,8 @@
     "@typescript-eslint/space-before-function-paren": "off",
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/quotes": "off",
-    "@typescript-eslint/ban-types": "off"
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off"
   },
   "ignorePatterns": [
     "dist",

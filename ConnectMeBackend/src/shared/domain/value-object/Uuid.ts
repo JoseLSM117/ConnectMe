@@ -1,4 +1,4 @@
-/* import { v4 as uuid } from 'uuid'
+import { v4 as uuid } from 'uuid'
 import validate from 'uuid-validate'
 import { InvalidArgumentError } from './InvalidArgumentError'
 import { ValueObject } from './ValueObject'
@@ -18,4 +18,4 @@ export class Uuid extends ValueObject<string> {
       throw new InvalidArgumentError(`<${this.constructor.name}> does not allow the value <${id}>`)
     }
   }
-} */
+}
