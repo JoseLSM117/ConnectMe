@@ -1,46 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1737946214640" clover="3.2.0">
-  <project timestamp="1737946214640" name="All files">
-    <metrics statements="31" coveredstatements="28" conditionals="5" coveredconditionals="5" methods="4" coveredmethods="3" elements="40" coveredelements="36" complexity="0" loc="31" ncloc="31" packages="1" files="3" classes="3"/>
-    <file name="InvalidArgumentError.ts" path="C:\Users\ADMIN\Desktop\react\ConnectMe\ConnectMeBackend\src\shared\domain\value-object\InvalidArgumentError.ts">
-      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <line num="1" count="1" type="stmt"/>
-    </file>
-    <file name="StringValueObject.ts" path="C:\Users\ADMIN\Desktop\react\ConnectMe\ConnectMeBackend\src\shared\domain\value-object\StringValueObject.ts">
-      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <line num="1" count="1" type="stmt"/>
-      <line num="2" count="1" type="stmt"/>
-      <line num="3" count="1" type="stmt"/>
-    </file>
-    <file name="ValueObject.ts" path="C:\Users\ADMIN\Desktop\react\ConnectMe\ConnectMeBackend\src\shared\domain\value-object\ValueObject.ts">
-      <metrics statements="27" coveredstatements="24" conditionals="5" coveredconditionals="5" methods="4" coveredmethods="3"/>
-      <line num="1" count="1" type="stmt"/>
-      <line num="2" count="1" type="stmt"/>
-      <line num="3" count="1" type="stmt"/>
-      <line num="4" count="1" type="stmt"/>
-      <line num="5" count="1" type="stmt"/>
-      <line num="6" count="1" type="stmt"/>
-      <line num="7" count="1" type="stmt"/>
-      <line num="8" count="1" type="cond" truecount="1" falsecount="0"/>
-      <line num="9" count="4" type="stmt"/>
-      <line num="10" count="4" type="stmt"/>
-      <line num="11" count="4" type="stmt"/>
-      <line num="12" count="1" type="stmt"/>
-      <line num="13" count="1" type="cond" truecount="1" falsecount="0"/>
-      <line num="14" count="4" type="cond" truecount="2" falsecount="0"/>
-      <line num="15" count="1" type="stmt"/>
-      <line num="16" count="1" type="stmt"/>
-      <line num="17" count="4" type="stmt"/>
-      <line num="18" count="1" type="stmt"/>
-      <line num="19" count="1" type="cond" truecount="1" falsecount="0"/>
-      <line num="20" count="1" type="stmt"/>
-      <line num="21" count="1" type="stmt"/>
-      <line num="22" count="1" type="stmt"/>
-      <line num="23" count="1" type="stmt"/>
-      <line num="24" count="0" type="stmt"/>
-      <line num="25" count="0" type="stmt"/>
-      <line num="26" count="0" type="stmt"/>
-      <line num="27" count="1" type="stmt"/>
-    </file>
+<coverage generated="1737947127928" clover="3.2.0">
+  <project timestamp="1737947127928" name="All files">
+    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0"/>
   </project>
 </coverage>
