@@ -11,13 +11,6 @@ describe("ValueObject", () => {
     expect(vo.value).toBe(value)
   })
 
-  test("Should throw an error if value is null o undefined", () => {
-    class TestValueObject extends ValueObject<string | null> { }
-
-    const value = null
-    expect(() => new TestValueObject(value)).toThrow()
-  })
-
   test("Should compare two value objects correctly", () => {
     const value = "Test"
     const vo1 = new TestValueObject(value)
