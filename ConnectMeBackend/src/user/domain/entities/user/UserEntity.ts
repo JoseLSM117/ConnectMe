@@ -39,12 +39,13 @@ export class User extends EntityRoot<User, PrimitiveData> {
   }
 
   toPrimitives(): PrimitiveData {
-    return {
+    throw new Error("Method not implemented.")
+    /* return {
       firstName: this.firstName.value,
       lastName: this.lastName.value,
       email: this.email.value,
       password: this.password.value,
       profilePicture: this.profilePicture?.value
-    }
+    } */
   }
 }
