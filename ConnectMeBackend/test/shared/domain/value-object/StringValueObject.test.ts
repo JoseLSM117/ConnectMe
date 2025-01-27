@@ -7,6 +7,7 @@ describe("StringValueObject", () => {
     const value = "test"
     const vo = new TestStringValueObject(value)
     expect(vo.value).toBe(value)
+    expect(typeof vo.value).toBe("string")
   })
 
   test("Should throw an error if value is empty", () => {
