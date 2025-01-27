@@ -1,3 +1,4 @@
 .dockerignore
 ConnectMeFront/node_modules
 ConnectMeBackend/node_modules
+ConnectMeBackend/coverage
