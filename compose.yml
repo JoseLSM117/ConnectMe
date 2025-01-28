@@ -15,12 +15,15 @@ services:
       context: ./
       target: backend-dev
     environment:
-      DATABASE_URL: postgresql://postgres:123@localhost:5432/ConnectMe?schema=public
+      DATABASE_URL: postgresql://postgres:123@postgresql:5432/ConnectMe?schema=public
     develop:
       watch:
         - path: ./ConnectMeBackend/src
           action: sync
           target: /usr/local/app/src
+        - path: ./ConnectMeBackend/prisma
+          action: sync
+          target: /usr/local/app/prisma
         - path: ./ConnectMeBackend/package.json
           action: rebuild
     labels:
