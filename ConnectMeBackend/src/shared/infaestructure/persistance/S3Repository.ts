@@ -19,10 +19,10 @@ export abstract class S3Repository {
     return this._client
   }
 
-  protected async s3UploadFile(uploadData: { file: Buffer, fileName: string }): Promise<void> {
+  async s3UploadFile(uploadData: { file: Buffer, fileName: string }): Promise<void> {
     const client = this.client()
     const params = new PutObjectCommand({
-      Bucket: process.env.AWS_BUCKET_NAME ?? "test",
+      Bucket: process.env.AWS_BUCKET_NAME ?? "connectme",
       Key: `${this.bucketSubFolders()}/${uploadData.fileName}`,
       Body: uploadData.file
     })
