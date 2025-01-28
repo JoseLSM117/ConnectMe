@@ -32,7 +32,7 @@ RUN npm run build
 FROM base AS backend-base
 COPY ConnectMeBackend/package.json ConnectMeBackend/package-lock.json ./
 RUN npm install
-COPY ConnectMeBackend/.eslintrc.json ConnectMeBackend/tsconfig.json ./ 
+COPY ConnectMeBackend/eslint.config.cjs ConnectMeBackend/tsconfig.json ./ 
 COPY ConnectMeBackend/prisma ./prisma 
 COPY ConnectMeBackend/src ./src
 COPY ConnectMeBackend/test ./tests
@@ -54,7 +54,7 @@ RUN npm run build
 
 FROM base AS final
 ENV NODE_ENV=production
-COPY --from=bakend-test /usr/local/app/package.json /usr/local/app/package-lock.json ./
+COPY --from=backend-test /usr/local/app/package.json /usr/local/app/package-lock.json ./
 RUN npm install
 COPY --from=backend-build /usr/local/app/dist ./src/server
 COPY --from=client-build /usr/local/app/dist ./src/static

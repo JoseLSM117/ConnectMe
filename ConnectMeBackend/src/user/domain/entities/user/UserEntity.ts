@@ -1,5 +1,5 @@
-import { EntityRoot } from "../EntityRoot"
-import { UserEmail, UserFirstName, UserLastName, UserPassword, UserProfilePicture } from "./valueObjects"
+import { EntityRoot } from "../EntityRoot";
+import { UserEmail, UserFirstName, UserLastName, UserPassword, UserProfilePicture } from "./valueObjects";
 
 interface PrimitiveData {
   firstName: string
@@ -9,23 +9,24 @@ interface PrimitiveData {
   profilePicture?: string
 }
 export class UserEntity extends EntityRoot<UserEntity, PrimitiveData> {
-  readonly firstName: UserFirstName
-  readonly lastName: UserLastName
-  readonly email: UserEmail
-  readonly password: UserPassword
-  readonly profilePicture?: UserProfilePicture
+  readonly firstName: UserFirstName;
+  readonly lastName: UserLastName;
+  readonly email: UserEmail;
+  readonly password: UserPassword;
+  readonly profilePicture?: UserProfilePicture;
 
   constructor({ firstName, lastName, email, password, profilePicture }: { firstName: UserFirstName, lastName: UserLastName, email: UserEmail, password: UserPassword, profilePicture?: UserProfilePicture }) {
-    super()
-    this.firstName = firstName
-    this.lastName = lastName
-    this.email = email
-    this.password = password
-    this.profilePicture = profilePicture
+    super();
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+    this.profilePicture = profilePicture;
   }
 
-  static create(firstName: UserFirstName, lastName: UserLastName, email: UserEmail, password: UserPassword, profilePicture?: UserProfilePicture): UserEntity {
-    return new UserEntity({ firstName, lastName, email, password, profilePicture })
+  static create(user: { firstName: UserFirstName, lastName: UserLastName, email: UserEmail, password: UserPassword, profilePicture?: UserProfilePicture }): UserEntity {
+    const { email, firstName, lastName, password, profilePicture } = user;
+    return new UserEntity({ firstName, lastName, email, password, profilePicture });
   }
 
   static fromPrimitives(plainData: { firstName: string, lastName: string, email: string, password: string, profilePicture?: string }): UserEntity {
@@ -35,7 +36,7 @@ export class UserEntity extends EntityRoot<UserEntity, PrimitiveData> {
       email: new UserEmail(plainData.email),
       password: new UserPassword(plainData.password),
       profilePicture: plainData.profilePicture ? new UserProfilePicture(plainData.profilePicture) : undefined
-    })
+    });
   }
 
   toPrimitives(): PrimitiveData {
@@ -45,6 +46,6 @@ export class UserEntity extends EntityRoot<UserEntity, PrimitiveData> {
       email: this.email.value,
       password: this.password.value,
       profilePicture: this.profilePicture?.value
-    }
+    };
   }
 }

@@ -3,11 +3,17 @@ import { UserEmail, UserFirstName, UserLastName, UserPassword } from "@src/user/
 
 describe("UserEntity", () => {
   test("Should create an instance with the create static method", () => {
-    const user = UserEntity.create(
-      new UserFirstName("John"),
+    /* new UserFirstName("John"),
       new UserLastName("Doe"),
       new UserEmail("JhonDoe@gmail.com"),
-      new UserPassword("password")
+      new UserPassword("password") */
+    const user = UserEntity.create(
+      {
+        firstName: new UserFirstName("John"),
+        lastName: new UserLastName("Doe"),
+        email: new UserEmail("JhonDoe@gmail.com"),
+        password: new UserPassword("password")
+      }
     )
     expect(user).toBeInstanceOf(UserEntity)
   })
