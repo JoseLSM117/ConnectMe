@@ -24,7 +24,7 @@ jobs:
           echo "BACKEND_AWS_BUCKET_NAME=${{ secrets.BACKEND_AWS_BUCKET_NAME }}" >> .env
           echo "BACKEND_AWS_REGION=${{ secrets.BACKEND_AWS_REGION }}" >> .env
           echo "BACKEND_AWS_SECRET_ACCESS_KEY=${{ secrets.BACKEND_AWS_SECRET_ACCESS_KEY }}" >> .env
-          echo "BACKEND_MAILER_EMAIL=${{ secrets.BACKEND_MAILER_HOST }}" >> .env
+          echo "BACKEND_MAILER_EMAIL=${{ secrets.BACKEND_MAILER_EMAIL }}" >> .env
           echo "BACKEND_MAILER_HOST=${{ secrets.BACKEND_MAILER_HOST }}" >> .env
           echo "BACKEND_MAILER_PASSWORD=${{ secrets.BACKEND_MAILER_PASSWORD }}" >> .env
           echo "BACKEND_MAILER_PORT=${{ secrets.BACKEND_MAILER_PORT }}" >> .env
