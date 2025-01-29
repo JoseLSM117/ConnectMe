@@ -1,4 +1,4 @@
-import { Exception } from "../../../../shared/domain/exceptions/Exception";
+import { Exception } from "@src/shared/domain/exceptions/Exception";
 
 export class InvalidFirstNameOrLastName extends Exception {
   constructor() {
