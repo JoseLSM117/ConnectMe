@@ -15,6 +15,22 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+      - name: Create backend .env file
+
+      - name: Create backend .env file
+        working-directory: ./ConnectMeBackend
+        run: |
+          echo "BACKEND_API_URL=${{ secrets.BACKEND_API_URL }}" > .env
+          echo "BACKEND_AWS_ACCESS_KEY_ID=${{ secrets.BACKEND_AWS_ACCESS_KEY_ID }}" >> .env
+          echo "BACKEND_AWS_BUCKET_NAME=${{ secrets.BACKEND_AWS_BUCKET_NAME }}" >> .env
+          echo "BACKEND_AWS_REGION=${{ secrets.BACKEND_AWS_REGION }}" >> .env
+          echo "BACKEND_AWS_SECRET_ACCESS_KEY=${{ secrets.BACKEND_AWS_SECRET_ACCESS_KEY }}" >> .env
+          echo "BACKEND_MAILER_EMAIL=${{ secrets.BACKEND_MAILER_HOST }}" >> .env
+          echo "BACKEND_MAILER_HOST=${{ secrets.BACKEND_MAILER_HOST }}" >> .env
+          echo "BACKEND_MAILER_PASSWORD=${{ secrets.BACKEND_MAILER_PASSWORD }}" >> .env
+          echo "BACKEND_MAILER_PORT=${{ secrets.BACKEND_MAILER_PORT }}" >> .env
+          echo "BACKEND_MAILER_SECRET_KEY=${{ secrets.BACKEND_MAILER_SECRET_KEY }}" >> .env
+          echo "BACKEND_MAILER_SECURITY=${{ secrets.BACKEND_MAILER_SECURITY }}" >> .env
 
       - name: Install Backend Dependencies
         working-directory: ./ConnectMeBackend
