@@ -15,7 +15,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-      - name: Create backend .env file
 
       - name: Create backend .env file
         working-directory: ./ConnectMeBackend
