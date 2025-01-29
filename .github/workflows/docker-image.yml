@@ -47,7 +47,7 @@ jobs:
         run: npm run test
 
       - name: Build Containers
-        run: docker compose build
+        run: docker compose build --no-cache
       
       - name: Start Containers
         run: docker compose up -d
