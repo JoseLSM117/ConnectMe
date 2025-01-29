@@ -1,4 +1,6 @@
+import * as dotenv from 'dotenv';
 import * as env from "env-var";
+dotenv.config({ path: '/ConnectMeBackend/.env' });
 export const envs = {
   API_URL: env.get("BACKEND_API_URL").required().asString(),
   AWS_REGION: env.get("BACKEND_AWS_REGION").required().asString(),
