@@ -14,8 +14,8 @@ services:
     build: 
       context: ./
       target: backend-dev
-    environment:
-      DATABASE_URL: postgresql://postgres:123@postgresql:5432/ConnectMe?schema=public
+    env_file: ./ConnectMeBackend/.env
+    
     develop:
       watch:
         - path: ./ConnectMeBackend/src
