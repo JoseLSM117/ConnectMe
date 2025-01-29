@@ -20,7 +20,8 @@ module.exports = (async function config() {
         "eslint-comments/require-description":"off",
         "@typescript-eslint/no-wrapper-object-types":"off",
         "@typescript-eslint/no-empty-function":"off",
-        "@typescript-eslint/no-unnecessary-condition":"off"
+        "@typescript-eslint/no-unnecessary-condition":"off",
+        "@typescript-eslint/no-unsafe-type-assertion":"off"
       }
     }
   ]
