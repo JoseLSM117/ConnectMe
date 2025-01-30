@@ -17,7 +17,7 @@ export class JwtServiceImpl implements JwtService {
       if (error instanceof JsonWebTokenError) {
         throw new CreateAccessTokenException(error.message as string);
       } else {
-        throw new CreateAccessTokenException('An unexpected error occurred');
+        throw new Error('An unexpected error occurred');
       }
     }
   }
@@ -28,7 +28,7 @@ export class JwtServiceImpl implements JwtService {
       if (error instanceof JsonWebTokenError) {
         throw new CreateRefreshTokenException(error.message as string);
       } else {
-        throw new CreateRefreshTokenException('An unexpected error occurred');
+        throw new Error('An unexpected error occurred');
       }
     }
   }
@@ -39,7 +39,7 @@ export class JwtServiceImpl implements JwtService {
       if (error instanceof JsonWebTokenError) {
         throw new CreateTokenException(error.message as string);
       } else {
-        throw new CreateTokenException('An unexpected error occurred');
+        throw new Error('An unexpected error occurred');
       }
     }
   }
