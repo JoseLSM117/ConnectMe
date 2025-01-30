@@ -5,30 +5,26 @@ on:
     branches: ["main"]
   pull_request:
     branches: ["main"]
-  
+
+env:
+  DATABASE_URL: ${{ env.DATABASE_URL }}
+  BACKEND_API_URL: ${{ env.BACKEND_API_URL }}
+  BACKEND_AWS_REGION: ${{ env.BACKEND_AWS_REGION }}
+  BACKEND_AWS_ACCESS_KEY_ID: ${{ env.BACKEND_AWS_ACCESS_KEY_ID }}
+  BACKEND_AWS_SECRET_ACCESS_KEY: ${{ env.BACKEND_AWS_SECRET_ACCESS_KEY }}
+  BACKEND_AWS_BUCKET_NAME: ${{ env.BACKEND_AWS_BUCKET_NAME }}
+  BACKEND_MAILER_SECRET_KEY: ${{ env.BACKEND_MAILER_SECRET_KEY }}
+  BACKEND_MAILER_HOST: ${{ env.BACKEND_MAILER_HOST }}
+  BACKEND_MAILER_SECURITY: ${{ env.BACKEND_MAILER_SECURITY }}
+  BACKEND_MAILER_EMAIL: ${{ env.BACKEND_MAILER_EMAIL }}
+  BACKEND_MAILER_PASSWORD: ${{ env.BACKEND_MAILER_PASSWORD }}
+  BACKEND_MAILER_PORT: ${{ env.BACKEND_MAILER_PORT }}
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-
-        env:
-          DATABASE_URL: ${{ env.DATABASE_URL }}
-          BACKEND_API_URL: ${{ env.BACKEND_API_URL }}
-          BACKEND_AWS_REGION: ${{ env.BACKEND_AWS_REGION }}
-          BACKEND_AWS_ACCESS_KEY_ID: ${{ env.BACKEND_AWS_ACCESS_KEY_ID }}
-          BACKEND_AWS_SECRET_ACCESS_KEY: ${{ env.BACKEND_AWS_SECRET_ACCESS_KEY }}
-          BACKEND_AWS_BUCKET_NAME: ${{ env.BACKEND_AWS_BUCKET_NAME }}
-          BACKEND_MAILER_SECRET_KEY: ${{ env.BACKEND_MAILER_SECRET_KEY }}
-          BACKEND_MAILER_HOST: ${{ env.BACKEND_MAILER_HOST }}
-          BACKEND_MAILER_SECURITY: ${{ env.BACKEND_MAILER_SECURITY }}
-          BACKEND_MAILER_EMAIL: ${{ env.BACKEND_MAILER_EMAIL }}
-          BACKEND_MAILER_PASSWORD: ${{ env.BACKEND_MAILER_PASSWORD }}
-          BACKEND_MAILER_PORT: ${{ env.BACKEND_MAILER_PORT }}
 
       - name: Install Backend Dependencies
         working-directory: ./ConnectMeBackend
