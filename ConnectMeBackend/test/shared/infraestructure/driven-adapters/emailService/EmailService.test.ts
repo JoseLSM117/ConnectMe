@@ -18,7 +18,7 @@ describe("EmailServiceImpl", () => {
   });
 
   test("Should initialize the transporter with the correct configuration", () => {
-    new EmailServiceImpl(mockConfig, "template");
+    new EmailServiceImpl(mockConfig);
     expect(nodemailer.createTransport).toHaveBeenCalledWith({
       host: mockConfig.host,
       port: mockConfig.port,
@@ -32,7 +32,7 @@ describe("EmailServiceImpl", () => {
 
   test("Should accept aditional transporter options", () => {
     const transporterOptions = { component: "test" }
-    new EmailServiceImpl(mockConfig, "template", transporterOptions);
+    new EmailServiceImpl(mockConfig, transporterOptions);
 
     expect(nodemailer.createTransport).toHaveBeenCalledWith({
       host: mockConfig.host,
@@ -47,53 +47,32 @@ describe("EmailServiceImpl", () => {
   })
 })
 
-
-describe("sendConfirmationEmail", () => {
-  const template = "<html>Confirmar cuenta</html>";
+describe("SendEmail", () => {
   let emailService: EmailServiceImpl;
   let mockTransporter: { sendMail: jest.Mock };
 
   beforeEach(() => {
-    // Crear un mock de transporter con sendMail
     mockTransporter = {
-      sendMail: jest.fn().mockResolvedValue({}),
+      sendMail: jest.fn().mockResolvedValue({})
     };
-
-    // Mockear createTransport para devolver el mockTransporter
     (nodemailer.createTransport as jest.Mock).mockReturnValue(mockTransporter);
+    emailService = new EmailServiceImpl({ host: "smtp.test.com", port: 587, user: "user", pass: "pass" });
+  })
 
-    emailService = new EmailServiceImpl(
-      { host: "smtp.test.com", port: 587, user: "user", pass: "pass" },
-      template
-    );
-  });
-
-  test("debería enviar el correo con parámetros correctos", async () => {
+  test("Should send the email with correctly params", () => {
     const to = "test@example.com";
+    const html = "<h1>test</h1>";
+    const subject = "test email";
+    emailService.sendEmail(to, html, subject);
+    expect(mockTransporter.sendMail).toHaveBeenCalledWith({ to, html, subject });
+  })
 
-    await emailService.sendConfirmationEmail(to);
-
-    expect(mockTransporter.sendMail).toHaveBeenCalledWith({
-      to,
-      subject: "Confirma tu cuenta",
-      html: template,
-    });
-  });
-
-  test("debería lanzar SendEmailException en caso de error", async () => {
+  test("Should throw SendEmailException", async() => {
+    const to = "test@example.com";
+    const html = "<h1>test</h1>";
+    const subject = "test email";
     const mockError = new Error()
     mockTransporter.sendMail.mockRejectedValue(mockError);
-    await expect(emailService.sendConfirmationEmail("")).rejects.toThrow(SendEmailException)
-
-    try {
-      await emailService.sendConfirmationEmail("test@example.com");
-    } catch (error) {
-      if (error instanceof SendEmailException) {
-        const sendEmailError = error as SendEmailException;
-        expect(sendEmailError.message).toBe("Confirmation email failed");
-      } else {
-        throw error;
-      }
-    }
-  });
-});
+    await expect(emailService.sendEmail(to, html, subject)).rejects.toThrow()
+  })
+})
