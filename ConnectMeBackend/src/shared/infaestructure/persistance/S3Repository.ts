@@ -8,8 +8,8 @@ export abstract class S3Repository {
     this._client = new S3Client({
       region: envs.AWS_REGION,
       credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? "",
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? ""
+        accessKeyId: envs.AWS_ACCESS_KEY_ID,
+        secretAccessKey: envs.AWS_SECRET_ACCESS_KEY
       }
     });
   }
@@ -23,7 +23,7 @@ export abstract class S3Repository {
   async s3UploadFile(uploadData: { file: Buffer, fileName: string }): Promise<void> {
     const client = this.client();
     const params = new PutObjectCommand({
-      Bucket: process.env.AWS_BUCKET_NAME ?? "connectme",
+      Bucket: envs.AWS_BUCKET_NAME ?? "connectme",
       Key: `${this.bucketSubFolders()}/${uploadData.fileName}`,
       Body: uploadData.file
     });

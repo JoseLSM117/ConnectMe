@@ -1,4 +1,5 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3"
+import { envs } from "../../../../src/shared/infaestructure/env/envs"
 import { S3Repository } from "@src/shared/infaestructure/persistance/S3Repository"
 
 const mockSend = jest.fn().mockResolvedValue({})
@@ -12,7 +13,14 @@ jest.mock("@aws-sdk/client-s3", () => ({
     constructor: { name: "PutObjectCommand" }
   }))
 }))
-
+jest.mock("../../../../src/shared/infaestructure/env/envs", () => ({
+  envs: {
+    AWS_BUCKET_NAME: "test-bucket",
+    AWS_REGION: "test-region",
+    AWS_ACCESS_KEY_ID: "test-key-id",
+    AWS_SECRET_ACCESS_KEY: "test-secret"
+  }
+}))
 class TestS3Repository extends S3Repository {
   protected bucketSubFolders(): string {
     return "test-folder"
@@ -22,11 +30,6 @@ class TestS3Repository extends S3Repository {
 describe("S3Repository", () => {
   beforeEach(() => {
     jest.clearAllMocks()
-
-    process.env.AWS_BUCKET_NAME = "test-bucket"
-    process.env.AWS_REGION = "test-region"
-    process.env.AWS_ACCESS_KEY_ID = "test-key-id"
-    process.env.AWS_SECRET_ACCESS_KEY = "test-secret"
   })
   test("Should initialize S3Client with correct configuration", () => {
     // eslint-disable-next-line no-new
@@ -58,7 +61,7 @@ describe("S3Repository", () => {
   })
 
   test("Should use the default bucket name if not provided", async () => {
-    delete process.env.AWS_BUCKET_NAME
+    envs.AWS_BUCKET_NAME = undefined
     const repository = new TestS3Repository()
 
     await repository.s3UploadFile({ file: Buffer.from("contenido"), fileName: "archivo.txt" })
