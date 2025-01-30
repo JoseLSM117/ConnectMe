@@ -1,4 +1,4 @@
 export interface EmailService {
-  sendConfirmationEmail: (to: string) => Promise<void>,
+  sendEmail:(to:string, html:string, subject:string) => Promise<void>
 }
 
