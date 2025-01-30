@@ -1,12 +1,11 @@
 
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { envs } from "../env/envs";
 export abstract class S3Repository {
   private readonly _client: S3Client;
 
   constructor() {
     this._client = new S3Client({
-      region: envs.AWS_REGION,
+      region: process.env.AWS_REGION,
       credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? "",
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? ""
