@@ -14,8 +14,9 @@ services:
     build: 
       context: ./
       target: backend-dev
-    env_file: ./ConnectMeBackend/.env
-    
+    env_file:
+      - path: ./ConnectMeBackend/.env
+        required: false
     develop:
       watch:
         - path: ./ConnectMeBackend/src
