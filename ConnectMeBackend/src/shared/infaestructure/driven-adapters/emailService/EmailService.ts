@@ -13,7 +13,6 @@ export class EmailServiceImpl implements EmailService {
 
   constructor(
     private readonly config: EmailConfig,
-    private readonly template: string,
     transporterOptions?: TransportOptions
   ) {
     this.transporter = nodemailer.createTransport({
@@ -27,16 +26,11 @@ export class EmailServiceImpl implements EmailService {
       ...transporterOptions,
     });
   }
-
-  async sendConfirmationEmail(to: string): Promise<void> {
+  async sendEmail(to: string, html: string, subject: string): Promise<void> {
     try {
-      await this.transporter.sendMail({
-        to,
-        subject: 'Confirma tu cuenta',
-        html: this.template
-      });
+      await this.transporter.sendMail({ to, subject, html });
     } catch (error) {
-      throw new SendEmailException('transport', `Confirmation email failed`);
+      throw new SendEmailException('transport', `Senting email failed`);
     }
   }
 }
