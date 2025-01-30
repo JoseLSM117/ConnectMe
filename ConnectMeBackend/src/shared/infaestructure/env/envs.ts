@@ -13,4 +13,8 @@ export const envs = {
   MAILER_EMAIL: env.get("BACKEND_MAILER_EMAIL").required().asString(),
   MAILER_PASSWORD: env.get("BACKEND_MAILER_PASSWORD").required().asString(),
   MAILER_PORT: env.get("BACKEND_MAILER_PORT").required().asString(),
+  JWT_ACCESS_SECRET_KEY: env.get("JWT_ACCESS_SECRET_KEY").required().asString(),
+  JWT_REFRESH_SECRET_KEY: env.get("JWT_REFRESH_SECRET_KEY").required().asString(),
+  ACCESS_TOKEN_EXPIRES_IN: env.get("ACCESS_TOKEN_EXPIRES_IN").required().asString(),
+  REFRESH_TOKEN_EXPIRES_IN: env.get("REFRESH_TOKEN_EXPIRES_IN").required().asString()
 };
