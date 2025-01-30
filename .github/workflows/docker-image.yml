@@ -22,6 +22,10 @@ jobs:
       BACKEND_MAILER_EMAIL: ${{ secrets.BACKEND_MAILER_EMAIL }}
       BACKEND_MAILER_PASSWORD: ${{ secrets.BACKEND_MAILER_PASSWORD }}
       BACKEND_MAILER_PORT: ${{ secrets.BACKEND_MAILER_PORT }}
+      JWT_ACCESS_SECRET_KEY: ${{ secrets.JWT_ACCESS_SECRET_KEY }}
+      JWT_REFRESH_SECRET_KEY: ${{ secrets.JWT_REFRESH_SECRET_KEY }}
+      ACCESS_TOKEN_EXPIRES_IN: ${{ secrets.ACCESS_TOKEN_EXPIRES_IN }}
+      REFRESH_TOKEN_EXPIRES_IN: ${{ secrets.REFRESH_TOKEN_EXPIRES_IN }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
