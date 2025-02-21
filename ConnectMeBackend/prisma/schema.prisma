@@ -13,87 +13,124 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
-  id               String             @id @default(uuid())
-  first_name       String
-  last_name        String
-  email            String             @unique
-  password         String
-  profile_picture  String?
-  create_at        DateTime           @default(now())
-  update_at        DateTime           @updatedAt
-  refresh_token_id String?            @unique
-  status_id        String?            @unique
-  RefreshToken     RefreshToken?      @relation(fields: [refresh_token_id], references: [id])
-  isVerify         Boolean
-  UserStatus       UserStatus?        @relation(fields: [status_id], references: [id])
-  ChatParticipants ChatParticipants[]
-  Messages         Messages[]
-  MessagesReads    MessagesReads[]
+enum Gender {
+  Male
+  Famale
+}
+
+model Phone {
+  phone_id           Int    @id @default(autoincrement())
+  phone_country_code String
+  phone_number       String
+  Users              Users?
 }
 
 model RefreshToken {
-  id    String @id @default(uuid())
-  token String
-  Users Users?
+  rt_id    Int    @id @default(autoincrement())
+  rt_token String
+  Users    Users?
 }
 
 model UserStatus {
-  id     String @id @default(uuid())
-  status String @unique
-  Users  Users?
+  status_id        Int    @id @default(autoincrement())
+  status_name      String
+  status_last_seen String
+  Users            Users?
 }
 
-model Chats {
-  id               String             @id @default(uuid())
-  name             String?
-  is_group         Boolean
-  picture_url      String?
-  create_at        DateTime           @default(now())
-  update_at        DateTime           @updatedAt
-  last_message_id  String?            @unique
-  lastMessage      Messages?          @relation("LastMessageInChat", fields: [last_message_id], references: [id])
-  Messages         Messages[]         @relation("MessagesInChat")
-  ChatParticipants ChatParticipants[]
-
-  @@index([create_at, update_at])
+model Users {
+  user_id              String            @id @default(uuid())
+  user_first_name      String
+  user_last_name       String
+  user_email           String            @unique
+  user_password        String
+  user_profile_picture String?
+  user_create_at       DateTime          @default(now())
+  user_update_at       DateTime          @updatedAt
+  user_country         String?
+  user_phone           Phone?            @relation(fields: [user_phone_id], references: [phone_id], onDelete: Cascade)
+  user_phone_id        Int?              @unique
+  user_gender          Gender?
+  user_status_id       Int?              @unique
+  UserStatus           UserStatus?       @relation(fields: [user_status_id], references: [status_id], onDelete: Cascade)
+  user_is_verify       Boolean           @default(false)
+  user_rt_id           Int               @unique
+  user_rt              RefreshToken?     @relation(fields: [user_rt_id], references: [rt_id], onDelete: Cascade)
+  ChatMembers          ChatMembers[]
+  Contacts             Contacts[]        @relation("UserContacts")
+  ContactsOf           Contacts[]        @relation("ContactOfUsers")
+  Messages             Messages[]
+  MessagesReads        MessagesReads[]
+  IndividualChatUser1  IndividualChats[] @relation(name: "User1")
+  IndividualChatUser2  IndividualChats[] @relation(name: "User2")
 }
 
-model ChatParticipants {
-  chat_id   String
-  user_id   String
-  joined_at DateTime
+model Contacts {
+  contact_id         Int    @id @default(autoincrement())
+  contact_user_id    String
+  contact_contact_id String
+  ContactUser        Users  @relation("UserContacts", fields: [contact_user_id], references: [user_id], onDelete: Cascade)
+  ContactContact     Users  @relation("ContactOfUsers", fields: [contact_contact_id], references: [user_id], onDelete: Cascade)
+  contact_name       String
 
-  Chats Chats @relation(fields: [chat_id], references: [id], onDelete: Cascade)
-  Users Users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  contact_update_at DateTime @updatedAt
+  contact_create_at DateTime @default(now())
 
-  @@id([chat_id, user_id])
+  @@unique([contact_contact_id, contact_user_id])
+}
+
+model IndividualChats {
+  ic_chat_id   String     @id @default(uuid())
+  ic_user1_id  String
+  ic_user2_id  String
+  ic_update_at DateTime   @updatedAt
+  ic_create_at DateTime   @default(now())
+  Messages     Messages[]
+  User1        Users      @relation(name: "User1", fields: [ic_user1_id], references: [user_id])
+  User2        Users      @relation(name: "User2", fields: [ic_user2_id], references: [user_id])
+}
+
+model ChatMembers {
+  member_group_id  String
+  member_user_id   String
+  member_joined_at DateTime   @default(now())
+  Group            GroupChats @relation(fields: [member_group_id], references: [group_id], onDelete: Cascade)
+  User             Users      @relation(fields: [member_user_id], references: [user_id], onDelete: Cascade)
+
+  @@unique([member_group_id, member_user_id])
+}
+
+model GroupChats {
+  group_id         String        @unique @default(uuid())
+  group_name       String
+  group_created_by String
+  group_image      String?
+  group_create_at  DateTime      @default(now())
+  ChatMembers      ChatMembers[]
+  Messages         Messages[]
 }
 
 model Messages {
-  id             String          @id @default(uuid())
-  chat_id        String
-  user_id        String
-  content        String
-  attachment_url String?
-  create_at      DateTime        @default(now())
-  update_at      DateTime        @updatedAt
-  Chats          Chats           @relation("MessagesInChat", fields: [chat_id], references: [id], onDelete: Cascade)
-  LastMessage    Chats?          @relation("LastMessageInChat")
-  Users          Users           @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  MessagesReads  MessagesReads[]
+  message_id        String   @id @default(uuid())
+  message_chat_id   String
+  message_user_id   String
+  message_content   String
+  message_create_at DateTime @default(now())
+  message_update_at DateTime @updatedAt
+  message_is_read   Boolean  @default(false)
 
-  @@index([create_at, update_at])
+  GroupChat      GroupChats      @relation(map: "GroupChats", fields: [message_chat_id], references: [group_id], onDelete: Cascade)
+  IndividualChat IndividualChats @relation(map: "IndividualChats", fields: [message_chat_id], references: [ic_chat_id], onDelete: Cascade)
+  User           Users           @relation(fields: [message_user_id], references: [user_id], onDelete: Cascade)
+  MessagesReads  MessagesReads[]
 }
 
 model MessagesReads {
-  id         String    @id @default(uuid())
-  message_id String
-  user_id    String
-  read_at    DateTime?
+  mr_id         String   @id @default(uuid())
+  mr_message_id String
+  mr_user_id    String   @unique
+  mr_read_at    DateTime
 
-  Messages Messages @relation(fields: [message_id], references: [id], onDelete: Cascade)
-  Users    Users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  @@unique([message_id, user_id])
+  Messages Messages @relation(fields: [mr_message_id], references: [message_id], onDelete: Cascade)
+  Users    Users    @relation(fields: [mr_user_id], references: [user_id], onDelete: Cascade)
 }
