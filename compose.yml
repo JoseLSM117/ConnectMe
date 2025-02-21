@@ -51,9 +51,24 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: 123
+    ports:
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_PORT=8043
+    ports:
+      - 8043:8043
+    labels:
+      traefik.http.routers.pgadmin.rule: Host(`pgadmin.localhost`)
+      traefik.http.services.pgadmin.loadbalancer.server.port: 8043
+    depends_on:
+      - postgresql
 
 volumes:
   pgdata:

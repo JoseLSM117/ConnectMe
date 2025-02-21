@@ -1,5 +1,5 @@
 import { UserEntity } from "@src/user/domain/entities/user/UserEntity"
-import { UserEmail, UserFirstName, UserLastName, UserPassword } from "@src/user/domain/entities/user/valueObjects"
+import { UserEmail, UserFirstName, UserLastName, UserPassword, UserProfilePicture, UserVerify } from "@src/user/domain/entities/user/valueObjects"
 
 describe("UserEntity", () => {
   test("Should create an instance with the create static method", () => {
@@ -9,46 +9,57 @@ describe("UserEntity", () => {
       new UserPassword("password") */
     const user = UserEntity.create(
       {
-        firstName: new UserFirstName("John"),
-        lastName: new UserLastName("Doe"),
-        email: new UserEmail("JhonDoe@gmail.com"),
-        password: new UserPassword("password")
+        userFirstName: new UserFirstName("John"),
+        userLastName: new UserLastName("Doe"),
+        userEmail: new UserEmail("JhonDoe@gmail.com"),
+        userPassword: new UserPassword("password"),
+        userId: null,
+        userIsVerify: new UserVerify(false),
+        userProfilePicture: null,
+        userCountry: null,
+        userGender: null,
+        userPhoneId: null,
+        userRtId: null,
+        userStatusId: null
       }
     )
     expect(user).toBeInstanceOf(UserEntity)
   })
   test("Should create an instance with the fromPrimitives static method", () => {
     const userData = {
-      firstName: "John",
-      lastName: "Doe",
-      email: "JhonDoe@gmail.com",
-      password: "password"
+      userFirstName: "John",
+      userLastName: "Doe",
+      userEmail: "JhonDoe@gmail.com",
+      userPassword: "password",
+      userIsVerify: false,
+      userId: null,
+      userProfilePicture: null,
+      userCountry: null,
+      userGender: null,
+      userPhoneId: null,
+      userRtId: null,
+      userStatusId: null
     }
     const user = UserEntity.fromPrimitives(userData)
     expect(user).toBeInstanceOf(UserEntity)
-    expect(user.toPrimitives()).toEqual({
-      firstName: "John",
-      lastName: "Doe",
-      email: "JhonDoe@gmail.com",
-      password: "password",
-      profilePicture: undefined
-    })
+    expect(user.toPrimitives()).toEqual(userData)
   })
   test("Should return the primitive data with the toPrimitives method", () => {
     const userData = {
-      firstName: "John",
-      lastName: "Doe",
-      email: "JhonDoe@gmail.com",
-      password: "password",
-      profilePicture: "profilePicture.png"
+      userFirstName: "John",
+      userLastName: "Doe",
+      userEmail: "JhonDoe@gmail.com",
+      userPassword: "password",
+      userIsVerify: false,
+      userId: null,
+      userProfilePicture: "profilePicture.png",
+      userCountry: null,
+      userGender: null,
+      userPhoneId: null,
+      userRtId: null,
+      userStatusId: null
     }
     const user = UserEntity.fromPrimitives(userData)
-    expect(user.toPrimitives()).toEqual({
-      firstName: "John",
-      lastName: "Doe",
-      email: "JhonDoe@gmail.com",
-      password: "password",
-      profilePicture: "profilePicture.png"
-    })
+    expect(user.toPrimitives()).toEqual(userData)
   })
 })

@@ -1,4 +1,4 @@
-import { UserEmail, UserFirstName, UserLastName, UserPassword } from "@src/user/domain/entities/user/valueObjects"
+import { UserEmail, UserFirstName, UserGender, UserLastName, UserPassword } from "@src/user/domain/entities/user/valueObjects"
 
 describe("valueObject in UserEntity", () => {
   test("Should create a valid UserFirstName instance", () => {
@@ -39,5 +39,15 @@ describe("valueObject in UserEntity", () => {
 
   test("Should throw InvalidPassword when creating a UserPassword instance", () => {
     expect(() => new UserPassword("123")).toThrow("The password should be between 6 and 60 characters")
+  })
+
+  test("Should create a valid UserGender instance", () => {
+    const userPassword = new UserGender("Male")
+    expect(userPassword).toBeInstanceOf(UserGender)
+    expect(userPassword.value).toBe("Male")
+  })
+
+  test("Should throw InvalidGender when creating a UserPassword instance", () => {
+    expect(() => new UserGender("123")).toThrow("This gender not exist")
   })
 })

@@ -10,10 +10,8 @@ export class Server {
     this._app.use(express.urlencoded({ extended: false }));
   }
 
-  addRoutes(routes: Router[]): void {
-    routes.forEach(route => {
-      this._app.use(route);
-    });
+  addRoutes(routes: Router, prefix: string): void {
+    this._app.use(prefix, routes);
   }
 
   start(): void {

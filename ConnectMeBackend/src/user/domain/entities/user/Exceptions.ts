@@ -17,3 +17,8 @@ export class InvalidPassword extends Exception {
     super("The password should be between 6 and 60 characters");
   }
 }
+export class InvalidGender extends Exception{
+  constructor(){
+    super("This gender not exist");
+  }
+}
