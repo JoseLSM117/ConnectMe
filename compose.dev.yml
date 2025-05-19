@@ -1,0 +1,85 @@
+services:
+  proxy:
+    image: traefik:v2.11
+    container_name: traefik
+    command: --api.insecure=true --providers.docker
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+  backend:
+    build:
+      context: ./
+      target: backend-dev
+    volumes:
+      - ./connectme/src:/app/src # Hot reload de código
+      - ~/.m2:/root/.m2 # Cache de Maven
+      - ./connectme/target/classes:/app/target/classes
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/ConnectMe
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123
+    labels:
+      traefik.http.routers.backend.rule: Host(`api.localhost`)
+      traefik.http.services.backend.loadbalancer.server.port: 8080
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    restart: unless-stopped
+
+  client:
+    build:
+      context: ./
+      target: client-dev
+    develop:
+      watch:
+        - path: ./ConnectMeFront/src
+          action: sync
+          target: /usr/local/app/src
+        - path: ./ConnectMeFront/package.json
+          action: rebuild
+        - path: ./ConnectMeFront/public
+          action: sync
+          target: /usr/local/app/public
+        - path: ./ConnectMeFront/vite.config.ts
+          action: sync
+          target: /usr/local/app/vite.config.ts
+    environment:
+      VITE_API_URL: "http://api.localhost"
+    labels:
+      traefik.http.routers.client.rule: Host(`app.localhost`)
+      traefik.http.services.client.loadbalancer.server.port: 5173
+
+  postgresql:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: ConnectMe
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata-dev:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d ConnectMe" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_PORT=8043
+    ports:
+      - 8043:8043
+    labels:
+      traefik.http.routers.pgadmin.rule: Host(`pgadmin.localhost`)
+      traefik.http.services.pgadmin.loadbalancer.server.port: 8043
+    depends_on:
+      - postgresql
+
+volumes:
+  pgdata-dev:

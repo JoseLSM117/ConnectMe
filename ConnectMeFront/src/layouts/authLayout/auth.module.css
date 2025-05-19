@@ -1,0 +1,21 @@
+.authLayout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.authLayout :global(.p-card) {
+  width: 384px;
+}
+
+.authLayout :global(.p-inputtext) {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+body {
+  overflow-y: hidden;
+}

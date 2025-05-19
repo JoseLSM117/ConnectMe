@@ -1,0 +1,38 @@
+# ================ #
+# General #
+# ================ #
+.DS_Store
+*.env
+*.log
+logs/
+tmp/
+
+# ================ #
+# Backend (Spring Boot) #
+# ================ #
+target/
+!maven-wrapper.jar
+application*.properties
+application*.yml
+
+# ================ #
+# Frontend (React) #
+# ================ #
+node_modules/
+/build
+.env.local
+
+# ================ #
+# Docker #
+# ================ #
+docker-compose.override.yml
+*.local.yml
+data/
+
+# ================ #
+# IDEs #
+# ================ #
+.vscode/
+.idea/
+*.iml
+compose.override.yml

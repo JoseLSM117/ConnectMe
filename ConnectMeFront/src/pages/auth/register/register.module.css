@@ -1,0 +1,53 @@
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.register-form :global(.p-button-label) {
+  color: white;
+}
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.register-container h2 {
+  text-align: center;
+  color: #cbd5e1;
+}
+
+.register-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.register-input small {
+  padding-left: 10px;
+}
+
+.input-error {
+  color: red;
+}
+
+.inputDesc {
+  color: #cbd5e1;
+}
+
+.phone-number-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.phone-number {
+  width: 100%;
+}
+
+.country-code {
+  /* min-width: 100px;
+  width: 100%; */
+}

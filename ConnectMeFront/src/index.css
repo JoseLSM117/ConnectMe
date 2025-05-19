@@ -1,0 +1,25 @@
+body {
+  background-color: var(--surface-ground);
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+  background: var(--surface-card);
+  border: var(--card-border);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.p-card {
+  background-color: #28334e;
+}

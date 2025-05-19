@@ -1,0 +1,75 @@
+services:
+  proxy:
+    image: traefik:v2.11
+    container_name: traefik-prod
+    command:
+      - --providers.docker
+      - --entrypoints.web.address=:80
+      - --api.insecure=false  # Deshabilita el dashboard en producción
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  backend:
+    build:
+      context: .
+      target: backend-run
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql-prod:5432/ConnectMe
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+    labels:
+      - "traefik.http.routers.backend.rule=Host(`api.tudominio.com`)"
+      - "traefik.http.routers.backend.tls=true"  # Habilita HTTPS
+      - "traefik.http.services.backend.loadbalancer.server.port=8080"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    depends_on:
+      - postgresql-prod
+
+  client:
+    build:
+      context: .
+      target: client-build  # Usa el target de build (no develop)
+    labels:
+      - "traefik.http.routers.client.rule=Host(`tudominio.com`)"
+      - "traefik.http.routers.client.tls=true"  # Habilita HTTPS
+      - "traefik.http.services.client.loadbalancer.server.port=80"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+
+  postgresql-prod:
+    image: postgres:17  # Usa la misma versión que en dev para consistencia
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ConnectMe
+    volumes:
+      - pgdata-prod:/var/lib/postgresql/data
+    deploy:
+      restart_policy:
+        condition: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata-prod:
+    driver: local
+    # Opcional: Si usas NFS en producción, descomenta:
+    # driver_opts:
+    #   type: nfs
+    #   o: addr=nfs-server.example.com,rw

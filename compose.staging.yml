@@ -1,0 +1,60 @@
+services:
+  proxy:
+    image: traefik:v2.11
+    container_name: traefik-staging
+    command:
+      - --providers.docker
+      - --entrypoints.web.address=:80
+      - --api.insecure=true  # Solo para staging (no en prod)
+    ports:
+      - "8081:80"  # Puerto diferente a prod/dev
+      - "8082:8080"  # Dashboard Traefik (opcional)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  backend:
+    build:
+      context: .
+      target: backend-run
+    environment:
+      SPRING_PROFILES_ACTIVE: staging
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql-staging:5432/ConnectMe
+      SPRING_DATASOURCE_USERNAME: ${DB_USER_STAGING}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD_STAGING}
+    labels:
+      - "traefik.http.routers.backend-staging.rule=Host(`staging.api.tudominio.com`)"  # Dominio específico
+      - "traefik.http.services.backend-staging.loadbalancer.server.port=8080"
+    depends_on:
+      - postgresql-staging
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  client:
+    build:
+      context: .
+      target: client-build  # Build optimizado, no desarrollo
+    labels:
+      - "traefik.http.routers.client-staging.rule=Host(`staging.tudominio.com`)"
+      - "traefik.http.services.client-staging.loadbalancer.server.port=80"
+    ports:
+      - "5174:5173"  # Puerto diferente a dev (opcional para pruebas locales)
+
+  postgresql-staging:
+    image: postgres:17  # Misma versión que dev/prod
+    environment:
+      POSTGRES_USER: ${DB_USER_STAGING}
+      POSTGRES_PASSWORD: ${DB_PASSWORD_STAGING}
+      POSTGRES_DB: ConnectMe
+    volumes:
+      - pgdata-staging:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER_STAGING}"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  pgdata-staging:
