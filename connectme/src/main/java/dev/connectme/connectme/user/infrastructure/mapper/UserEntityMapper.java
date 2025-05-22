@@ -30,8 +30,8 @@ public class UserEntityMapper {
                 user.getGender(),
                 user.isVerify(),
                 new ArrayList<>(),
-                UserStatusEntityMapper.fromDomain(user.getUserStatus()),
-                PhoneEntity.fromDomain(user.getPhone())
+                user.getUserStatus() != null ? UserStatusEntityMapper.fromDomain(user.getUserStatus()): null,
+                user.getPhone() != null ? PhoneEntity.fromDomain(user.getPhone()) : null
         );
         if (userEntity.getUserStatus() != null) {
             userEntity.getUserStatus().setUser(userEntity);
@@ -44,10 +44,8 @@ public class UserEntityMapper {
 
     @Transactional
     public static User toDomain(UserEntity entity) {
-        if (entity == null) return null;
-
         List<Token> tokens = Collections.emptyList();
-        if (Hibernate.isInitialized(entity.getTokens()) && entity.getTokens() != null) {
+        if (entity.getTokens() != null) {
             tokens = entity.getTokens().stream()
                     .map(TokenEntityMapper::toDomain)
                     .collect(Collectors.toList());
@@ -66,7 +64,7 @@ public class UserEntityMapper {
                 entity.getCreateAt(),
                 entity.getUpdateAt(),
                 tokens,
-                entity.getUserStatus().toDomain(),
+                entity.getUserStatus() != null ? entity.getUserStatus().toDomain() : null,
                 entity.getPhone() != null ? entity.getPhone().toDomain():null
         );
     }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class AuthExceptionHandler {
     @ExceptionHandler(UserAlreadyRegisteredException.class)
     public ResponseEntity<ApiResponse<Object>> handleUserAlreadyRegistered(UserAlreadyRegisteredException ex) {
-        ApiResponse<Object> response = new ApiResponse<>(400, ex.getMessage(), null);
+        ApiResponse<Object> response = new ApiResponse<>(400, ex.getMessage() != null ? ex.getMessage() : "The phone number is already registered", null);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 

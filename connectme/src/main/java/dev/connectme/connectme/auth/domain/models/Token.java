@@ -26,7 +26,7 @@ public class Token {
 
     private boolean revoked;
 
-    @NotBlank(message = "TokenType is required")
+    @NotNull(message = "TokenType is required")
     private TokenType tokenType;
 
     @ToString.Exclude

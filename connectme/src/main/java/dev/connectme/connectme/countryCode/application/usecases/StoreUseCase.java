@@ -16,10 +16,9 @@ public class StoreUseCase {
     private final CountryCodeRepositoryPort countryCodeRepositoryPort;
 
     public StoredCountryCodeDto execute(ToStoreCountryCodeDto toStoreCountryCodeDto){
-        System.out.println("En storedCountryCode" + toStoreCountryCodeDto);
         Optional<CountryCode> foundCountryCode = countryCodeRepositoryPort.findByCode(toStoreCountryCodeDto.getCode());
         if(foundCountryCode.isPresent()){
-            throw new CountryCodeAlreadyExistException("Country code already exists");
+            throw new CountryCodeAlreadyExistException();
         }
         CountryCode countryCode = CountryCode.builder()
                 .name(toStoreCountryCodeDto.getName())

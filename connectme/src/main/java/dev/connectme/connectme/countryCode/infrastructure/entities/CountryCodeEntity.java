@@ -5,15 +5,13 @@ import dev.connectme.connectme.countryCode.domain.models.CountryCode;
 import dev.connectme.connectme.countryCode.infrastructure.mapper.CountryCodeEntityMapper;
 import dev.connectme.connectme.phone.infrastructure.entities.PhoneEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class CountryCodeEntity {
 
     @Id

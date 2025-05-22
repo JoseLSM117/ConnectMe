@@ -26,6 +26,6 @@ public class FindAllCountryCodesController {
                 "Success",
                 allCountryCodes
         );
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

@@ -31,19 +31,4 @@ public class JpaUserRepositoryAdapter implements UserRepositoryPort {
     public Optional<User> findByEmail(String email) {
         return jpaUserRepository.findByEmail(email).map(UserEntity::toDomainModel);
     }
-
-    @Override
-    public List<User> findAll() {
-        return List.of();
-    }
-
-    @Override
-    public Optional<User> update(User user) {
-        return Optional.empty();
-    }
-
-    @Override
-    public boolean deleteById(Long id) {
-        return false;
-    }
 }

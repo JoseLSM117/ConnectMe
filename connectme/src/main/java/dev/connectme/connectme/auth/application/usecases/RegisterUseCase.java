@@ -24,7 +24,6 @@ import java.util.Optional;
 public class RegisterUseCase {
     private final PhoneRepositoryPort phoneRepositoryPort;
     private final PasswordEncoder passwordEncoder;
-    private final TokenServicePort tokenServicePort;
     private final CountryCodeRepositoryPort countryCodeRepositoryPort;
     private final UserRepositoryPort userRepositoryPort;
 
@@ -34,7 +33,7 @@ public class RegisterUseCase {
 
         //Verify if exist an user with phoneNumberRegister
         if (userFoundWithPhone.isPresent()) {
-            throw new UserAlreadyRegisteredException("The phone number is already registered.");
+            throw new UserAlreadyRegisteredException();
         }
 
         //Create user status
@@ -45,8 +44,6 @@ public class RegisterUseCase {
 
         //Find country code by id
         CountryCode countryCode = countryCodeRepositoryPort.findById(newUserInfo.getCountryCodeId()).orElseThrow();
-        //To do add custom exception
-        //***************** code **************
 
         //Encode password
         String passwordEncoded = passwordEncoder.encode(newUserInfo.getPassword());

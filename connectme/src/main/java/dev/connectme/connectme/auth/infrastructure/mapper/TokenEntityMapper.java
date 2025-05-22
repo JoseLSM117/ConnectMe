@@ -3,7 +3,9 @@ package dev.connectme.connectme.auth.infrastructure.mapper;
 import dev.connectme.connectme.auth.domain.models.Token;
 import dev.connectme.connectme.auth.domain.models.TokenDTO;
 import dev.connectme.connectme.auth.infrastructure.entities.TokenEntity;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class TokenEntityMapper {
 
     public static TokenEntity fromDomain(Token token) {
@@ -26,15 +28,5 @@ public class TokenEntityMapper {
                 .revoked(tokenEntity.isRevoked())
                 .tokenType(tokenEntity.getTokenType())
                 .build();
-    }
-
-    public static TokenDTO toDTO(TokenEntity tokenEntity) {
-        return new TokenDTO(
-                tokenEntity.getId(),
-                tokenEntity.getToken(),
-                tokenEntity.isExpired(),
-                tokenEntity.isRevoked(),
-                tokenEntity.getTokenType()
-        );
     }
 }

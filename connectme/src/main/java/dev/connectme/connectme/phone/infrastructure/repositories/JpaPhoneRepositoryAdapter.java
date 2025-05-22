@@ -16,25 +16,13 @@ public class JpaPhoneRepositoryAdapter implements PhoneRepositoryPort {
     @Transactional
     @Override
     public Phone save(Phone phone) {
-        System.out.println("Phone data");
-        System.out.println(phone);
         PhoneEntity phoneEntity = PhoneEntity.fromDomain(phone);
-        System.out.println("Phone Entity");
-        System.out.println(phoneEntity);
         PhoneEntity phoneToSave = jpaPhoneRepository.save(phoneEntity);
-        System.out.println("Phone Saved");
-        System.out.println(phoneToSave);
         return phoneToSave.toDomain();
     }
 
     @Override
     public Optional<Phone> findByNumber(String number) {
-        System.out.println("All");
-        System.out.println(jpaPhoneRepository.findAll());
-        System.out.println("MY");
-        System.out.println(number);
-        System.out.println("found");
-        System.out.println(jpaPhoneRepository.findByNumber(number));
         return jpaPhoneRepository.findByNumber(number).map(PhoneEntity::toDomain);
     }
 }

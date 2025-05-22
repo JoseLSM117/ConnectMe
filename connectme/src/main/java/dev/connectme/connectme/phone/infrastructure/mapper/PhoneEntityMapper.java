@@ -10,17 +10,18 @@ public class PhoneEntityMapper {
     public static PhoneEntity fromDomain(Phone phone){
         return new PhoneEntity(
                 phone.getId(),
-                CountryCodeEntity.fromDomainModel(phone.getCountryCode()),
+                phone.getCountryCode() != null ? CountryCodeEntity.fromDomainModel(phone.getCountryCode()): null,
                 phone.getNumber(),
-                null
+                phone.getUser() != null ? UserEntity.fromDomainModel(phone.getUser()):null
         );
 
     }
     public static Phone toDomain(PhoneEntity phoneEntity){
         return Phone.builder()
                 .id(phoneEntity.getId())
-                .countryCode(phoneEntity.getCountryCode().toDomainModel())
+                .countryCode(phoneEntity.getCountryCode() != null ? phoneEntity.getCountryCode().toDomainModel(): null)
                 .number(phoneEntity.getNumber())
+                .user(phoneEntity.getUser() != null ? phoneEntity.getUser().toDomainModel(): null)
                 .build();
     }
 }

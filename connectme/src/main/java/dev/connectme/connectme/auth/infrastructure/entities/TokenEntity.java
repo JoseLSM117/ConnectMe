@@ -6,6 +6,7 @@ import dev.connectme.connectme.auth.infrastructure.mapper.TokenEntityMapper;
 import dev.connectme.connectme.user.infrastructure.entities.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class TokenEntity {
 
     @Id

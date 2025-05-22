@@ -4,11 +4,12 @@ import dev.connectme.connectme.phone.domain.models.Phone;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Builder
-@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class ToStoreCountryCodeDto {
     @NotBlank(message = "Country name is required")
     private String name;

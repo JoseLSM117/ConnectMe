@@ -19,21 +19,21 @@ import java.util.List;
 @AllArgsConstructor
 public class User {
     public enum Gender {
-        FAMALE,
+        FEMALE,
         MALE
     }
 
     private Long id;
 
-    @NotBlank(message = "First name is required.")
-    @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters.")
+    @NotBlank(message = "First name is required")
+    @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
     private String firstName;
 
-    @NotBlank(message = "Last name is required.")
-    @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters.")
+    @NotBlank(message = "Last name is required")
+    @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters")
     private String lastName;
 
-    @Email(message = "Please provide a valid email address.")
+    @Email(message = "Please provide a valid email address")
     private String email;
 
     private String country;
@@ -43,11 +43,11 @@ public class User {
     @NotNull(message = "Verify is required")
     private boolean isVerify;
 
-    @NotBlank(message = "Password is required.")
-    @Size(min = 6, max = 100, message = "Password must be between 6 and 100 characters.")
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, max = 100, message = "Password must be between 6 and 100 characters")
     private String password;
 
-    @Size(max = 255, message = "Profile picture URL is too long.")
+    @Size(max = 255, message = "Profile picture URL is too long")
     private String profilePicture;
 
     private Date createAt;

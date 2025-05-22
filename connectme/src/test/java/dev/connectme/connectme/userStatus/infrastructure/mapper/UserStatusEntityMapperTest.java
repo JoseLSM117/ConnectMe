@@ -66,4 +66,10 @@ public class UserStatusEntityMapperTest {
         assertEquals(originalDomain.getStatusName(), convertedDomain.getStatusName());
         assertEquals(originalDomain.getLastSeen(), convertedDomain.getLastSeen());
     }
+    @Test
+    void shouldInstanceCorrectly() {
+        assertDoesNotThrow(() -> {
+            UserStatusEntityMapper userStatusEntityMapper = new UserStatusEntityMapper();
+        });
+    }
 }

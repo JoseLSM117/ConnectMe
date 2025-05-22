@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class CountryCodeExceptionHandler {
     @ExceptionHandler(CountryCodeAlreadyExistException.class)
     public ResponseEntity<ApiResponse<Object>> countryCodeAlreadyExist(CountryCodeAlreadyExistException ex) {
-        ApiResponse<Object> response = new ApiResponse<>(400, ex.getMessage(), null);
+        ApiResponse<Object> response = new ApiResponse<>(400, "Country code already exists", null);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }
