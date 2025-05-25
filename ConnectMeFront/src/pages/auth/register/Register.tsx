@@ -43,7 +43,7 @@ export const Register = () => {
   return (
     <div className={registerStyles['register-container']}>
       <div>
-        <h2>Register New Account</h2>
+        <h2>Register New Account xd</h2>
       </div>
       <Card>
         <form className={registerStyles['register-form']} onSubmit={onSubmit}>
