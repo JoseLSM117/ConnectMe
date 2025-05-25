@@ -50,6 +50,7 @@ public class TokenEntityTest {
                 .revoked(false)
                 .tokenType(Token.TokenType.BEARER)
                 .user(user)
+                .tokenPurpose(Token.TokenPurpose.ACCESS)
                 .build();
         TokenEntity tokenSaved = jpaTokenRepository.save(tokenEntity);
 
@@ -67,6 +68,7 @@ public class TokenEntityTest {
                     .revoked(false)
                     .tokenType(Token.TokenType.BEARER)
                     .user(user)
+                    .tokenPurpose(Token.TokenPurpose.ACCESS)
                     .build();
             TokenEntity tokenSaved = jpaTokenRepository.save(tokenEntity);
         });
@@ -79,6 +81,7 @@ public class TokenEntityTest {
                 .revoked(false)
                 .tokenType(Token.TokenType.BEARER)
                 .user(user)
+                .tokenPurpose(Token.TokenPurpose.ACCESS)
                 .build();
         assertFalse(tokenEntity.isExpired());
     }
@@ -90,6 +93,7 @@ public class TokenEntityTest {
                 .expired(false)
                 .tokenType(Token.TokenType.BEARER)
                 .user(user)
+                .tokenPurpose(Token.TokenPurpose.ACCESS)
                 .build();
         assertFalse(tokenEntity.isRevoked());
     }
@@ -102,6 +106,7 @@ public class TokenEntityTest {
                     .expired(false)
                     .revoked(false)
                     .user(user)
+                    .tokenPurpose(Token.TokenPurpose.ACCESS)
                     .build();
             jpaTokenRepository.save(tokenEntity);
         });
@@ -114,6 +119,20 @@ public class TokenEntityTest {
                     .expired(false)
                     .revoked(false)
                     .tokenType(Token.TokenType.BEARER)
+                    .tokenPurpose(Token.TokenPurpose.ACCESS)
+                    .build();
+            jpaTokenRepository.save(tokenEntity);
+        });
+    }
+    @Test
+    void shouldThrowExceptionIfTokenPurposeIsNull() {
+        assertThrows(Exception.class, () -> {
+            TokenEntity tokenEntity = TokenEntity.builder()
+                    .token("token")
+                    .expired(false)
+                    .revoked(false)
+                    .tokenType(Token.TokenType.BEARER)
+                    .user(user)
                     .build();
             jpaTokenRepository.save(tokenEntity);
         });

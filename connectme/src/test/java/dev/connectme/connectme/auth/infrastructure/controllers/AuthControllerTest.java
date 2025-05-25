@@ -2,6 +2,7 @@ package dev.connectme.connectme.auth.infrastructure.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.connectme.connectme.auth.application.usecases.LoginUseCase;
 import dev.connectme.connectme.auth.application.usecases.RegisterUseCase;
 import dev.connectme.connectme.auth.infrastructure.dtos.in.RegisterUserDTORequest;
 import dev.connectme.connectme.auth.infrastructure.dtos.out.RegisterUserDtoResponse;
@@ -27,6 +28,9 @@ public class AuthControllerTest {
 
     @MockitoBean
     private RegisterUseCase registerUseCase;
+
+    @MockitoBean
+    private LoginUseCase loginUseCase;
 
     @Autowired
     private ObjectMapper objectMapper;

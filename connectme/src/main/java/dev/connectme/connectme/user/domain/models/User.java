@@ -60,8 +60,4 @@ public class User {
 
     private Phone phone;
 
-    public void addToken(Token token) {
-        token.setUser(this);
-        this.tokens.add(token);
-    }
 }

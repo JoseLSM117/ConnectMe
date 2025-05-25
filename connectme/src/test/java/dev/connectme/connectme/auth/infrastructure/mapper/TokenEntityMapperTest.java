@@ -14,6 +14,7 @@ public class TokenEntityMapperTest {
                 .revoked(false)
                 .expired(false)
                 .id(1L)
+                .tokenPurpose(Token.TokenPurpose.ACCESS)
                 .build();
         TokenEntity tokenEntity = TokenEntity.fromDomainModel(token);
 
@@ -23,6 +24,7 @@ public class TokenEntityMapperTest {
         assertEquals(tokenEntity.getToken(), token.getToken());
         assertEquals(tokenEntity.isRevoked(), token.isRevoked());
         assertEquals(tokenEntity.isExpired(), token.isExpired());
+        assertEquals(tokenEntity.getTokenPurpose(), token.getTokenPurpose());
     }
 
     @Test
@@ -32,6 +34,7 @@ public class TokenEntityMapperTest {
                 .tokenType(Token.TokenType.BEARER)
                 .revoked(false)
                 .expired(false)
+                .tokenPurpose(Token.TokenPurpose.ACCESS)
                 .id(1L)
                 .build();
         Token token = tokenEntity.toDomainModel();
@@ -42,5 +45,6 @@ public class TokenEntityMapperTest {
         assertEquals(tokenEntity.getToken(), token.getToken());
         assertEquals(tokenEntity.isRevoked(), token.isRevoked());
         assertEquals(tokenEntity.isExpired(), token.isExpired());
+        assertEquals(tokenEntity.getTokenPurpose(), token.getTokenPurpose());
     }
 }

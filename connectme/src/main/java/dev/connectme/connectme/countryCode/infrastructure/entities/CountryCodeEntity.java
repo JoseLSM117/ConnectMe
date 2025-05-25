@@ -28,7 +28,7 @@ public class CountryCodeEntity {
     private String flag;
 
     @ToString.Exclude
-    @OneToOne(mappedBy = "countryCode", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "countryCode")
     @JsonManagedReference
     private PhoneEntity phone;
 

@@ -40,7 +40,7 @@ public class TokenTest {
                 .expired(false)
                 .revoked(false)
                 .tokenType(Token.TokenType.BEARER)
-                .user(user)
+                .tokenPurpose(Token.TokenPurpose.ACCESS)
                 .build();
 
         assertNotNull(token);
@@ -49,7 +49,7 @@ public class TokenTest {
         assertFalse(token.isExpired());
         assertFalse(token.isRevoked());
         assertEquals(Token.TokenType.BEARER, token.getTokenType());
-        assertEquals(user, token.getUser());
+        assertEquals(token.getTokenPurpose(), Token.TokenPurpose.ACCESS);
     }
 
     @Test
@@ -69,9 +69,12 @@ public class TokenTest {
                 .anyMatch(v -> v.getPropertyPath().toString().equals("tokenType") && v.getMessage().equals("TokenType is required"));
         boolean userMissing = violations.stream()
                 .anyMatch(v -> v.getPropertyPath().toString().equals("user") && v.getMessage().equals("User is required"));
+        boolean purposeMissing = violations.stream()
+                .anyMatch(v -> v.getPropertyPath().toString().equals("tokenPurpose") && v.getMessage().equals("TokenPurpose is required"));
 
         assertTrue(tokenMissing);
         assertTrue(tokenTypeMissing);
         assertTrue(userMissing);
+        assertTrue(purposeMissing);
     }
 }

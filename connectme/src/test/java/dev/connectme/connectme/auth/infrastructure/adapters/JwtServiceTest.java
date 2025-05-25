@@ -37,13 +37,19 @@ class JwtServiceTest {
 
     @Test
     void shouldGenerateAccessTokenWithCorrectClaims() {
-        Token token = jwtService.generateAccessToken(user);
+        Phone phone = Phone.builder()
+                .id(1L)
+                .number("5569382066")
+                .user(user)
+                .build();
+        Token token = jwtService.generateAccessToken(phone);
 
         assertNotNull(token);
         assertNotNull(token.getToken());
         assertFalse(token.isExpired());
         assertFalse(token.isRevoked());
         assertEquals(Token.TokenType.BEARER, token.getTokenType());
+        assertEquals(Token.TokenPurpose.ACCESS, token.getTokenPurpose());
 
         Claims claims = parseClaims(token.getToken(), getKeyFromService());
         assertEquals("5569382066", claims.getSubject());
@@ -53,8 +59,13 @@ class JwtServiceTest {
 
     @Test
     void shouldGenerateRefreshTokenWithDifferentExpiration() {
-        Token accessToken = jwtService.generateAccessToken(user);
-        Token refreshToken = jwtService.generateRefreshToken(user);
+        Phone phone = Phone.builder()
+                .id(1L)
+                .number("5569382066")
+                .user(user)
+                .build();
+        Token accessToken = jwtService.generateAccessToken(phone);
+        Token refreshToken = jwtService.generateRefreshToken(phone);
 
         Claims accessClaims = parseClaims(accessToken.getToken(), getKeyFromService());
         Claims refreshClaims = parseClaims(refreshToken.getToken(), getKeyFromService());

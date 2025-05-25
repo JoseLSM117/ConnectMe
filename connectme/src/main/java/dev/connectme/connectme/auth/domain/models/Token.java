@@ -17,6 +17,11 @@ public class Token {
         BEARER
     }
 
+    public enum TokenPurpose {
+        ACCESS,
+        REFRESH
+    }
+
     private Long id;
 
     @NotBlank(message = "Token is required")
@@ -29,8 +34,11 @@ public class Token {
     @NotNull(message = "TokenType is required")
     private TokenType tokenType;
 
-    @ToString.Exclude
-    @NotNull(message = "User is required")
-    private User user;
+    @NotNull(message = "TokenPurpose is required")
+    private TokenPurpose tokenPurpose;
+//
+//    @ToString.Exclude
+//    @NotNull(message = "User is required")
+//    private User user;
 
 }

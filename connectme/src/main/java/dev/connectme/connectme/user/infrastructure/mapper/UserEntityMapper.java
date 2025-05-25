@@ -65,7 +65,7 @@ public class UserEntityMapper {
                 entity.getUpdateAt(),
                 tokens,
                 entity.getUserStatus() != null ? entity.getUserStatus().toDomain() : null,
-                entity.getPhone() != null ? entity.getPhone().toDomain():null
+                null
         );
     }
 }

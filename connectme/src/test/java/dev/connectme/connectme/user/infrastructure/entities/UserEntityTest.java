@@ -136,6 +136,7 @@ public class UserEntityTest {
                 .expired(false)
                 .tokenType(Token.TokenType.BEARER)
                 .revoked(false)
+                .tokenPurpose(Token.TokenPurpose.ACCESS)
                 .build();
 
         UserStatusEntity userStatusEntity = UserStatusEntity.builder()
@@ -189,12 +190,14 @@ public class UserEntityTest {
                 .tokenType(Token.TokenType.BEARER)
                 .token("token1")
                 .expired(false)
+                .tokenPurpose(Token.TokenPurpose.ACCESS)
                 .build();
         TokenEntity token2 = TokenEntity.builder()
                 .revoked(false)
                 .tokenType(Token.TokenType.BEARER)
                 .token("token2")
                 .expired(false)
+                .tokenPurpose(Token.TokenPurpose.REFRESH)
                 .build();
 
         UserEntity user = UserEntity.builder()

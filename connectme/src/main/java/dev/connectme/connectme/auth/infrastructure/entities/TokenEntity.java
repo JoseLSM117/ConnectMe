@@ -34,6 +34,9 @@ public class TokenEntity {
     @Column(name = "token_type", nullable = false)
     private Token.TokenType tokenType;
 
+    @Column(name = "token_purpose", nullable = false)
+    private Token.TokenPurpose tokenPurpose;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference("user-tokens")

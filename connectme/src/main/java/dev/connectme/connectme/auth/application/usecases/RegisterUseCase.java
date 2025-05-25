@@ -64,7 +64,7 @@ public class RegisterUseCase {
                 .phone(phone)
                 .build();
         User userStored = userRepositoryPort.save(user);
-
+        System.out.println(userStored);
         return RegisterUserDtoResponse.builder()
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())

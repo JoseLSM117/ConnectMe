@@ -279,15 +279,8 @@ public class UserTest {
                 .firstName("jose")
                 .tokens(new ArrayList<>(List.of(token1)))
                 .build();
-        Token token2 = Token.builder()
-                .tokenType(Token.TokenType.BEARER)
-                .token("test_2")
-                .revoked(false)
-                .expired(false)
-                .build();
 
-        user.addToken(token2);
-        assertEquals(user.getTokens().size(), 2);
-        assertEquals(user.getTokens().get(1).getToken(), "test_2");
+        assertEquals(user.getTokens().size(), 1);
+        assertEquals(user.getTokens().get(0).getToken(), "test");
     }
 }

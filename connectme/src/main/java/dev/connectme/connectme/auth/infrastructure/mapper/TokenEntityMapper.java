@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 public class TokenEntityMapper {
 
     public static TokenEntity fromDomain(Token token) {
-        TokenEntity tokenEntity = new TokenEntity(
+        return new TokenEntity(
                 token.getId(),
                 token.getToken(),
                 token.isExpired(),
                 token.isRevoked(),
                 token.getTokenType(),
+                token.getTokenPurpose(),
                 null
         );
-        return tokenEntity;
     }
 
     public static Token toDomain(TokenEntity tokenEntity) {
@@ -27,6 +27,7 @@ public class TokenEntityMapper {
                 .expired(tokenEntity.isExpired())
                 .revoked(tokenEntity.isRevoked())
                 .tokenType(tokenEntity.getTokenType())
+                .tokenPurpose(tokenEntity.getTokenPurpose())
                 .build();
     }
 }

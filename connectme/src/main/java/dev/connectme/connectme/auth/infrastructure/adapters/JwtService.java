@@ -2,6 +2,7 @@ package dev.connectme.connectme.auth.infrastructure.adapters;
 
 import dev.connectme.connectme.auth.application.ports.TokenServicePort;
 import dev.connectme.connectme.auth.domain.models.Token;
+import dev.connectme.connectme.phone.domain.models.Phone;
 import dev.connectme.connectme.user.domain.models.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -25,22 +26,22 @@ public class JwtService implements TokenServicePort {
     private long refreshTokenExpiration;
 
     @Override
-    public Token generateAccessToken(User user) {
-        return buildToken(user, accessTokenExpiration);
+    public Token generateAccessToken(Phone phone) {
+        return buildToken(phone, accessTokenExpiration, Token.TokenPurpose.ACCESS);
     }
 
     @Override
-    public Token generateRefreshToken(User user) {
-        return buildToken(user, refreshTokenExpiration);
+    public Token generateRefreshToken(Phone phone) {
+        return buildToken(phone, refreshTokenExpiration, Token.TokenPurpose.REFRESH);
     }
 
     @Override
-    public Token buildToken(User user, long expiration) {
+    public Token buildToken(Phone phone, long expiration, Token.TokenPurpose purpose) {
         Date expirationDate = new Date(System.currentTimeMillis() + expiration);
         String token = Jwts.builder()
-                .id(user.getId().toString())
-                .subject(user.getPhone().getNumber())
-                .claim("verify", user.isVerify())
+                .id(phone.getUser().getId().toString())
+                .subject(phone.getNumber())
+                .claim("verify", phone.getUser().isVerify())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(expirationDate)
                 .signWith(getSignInKey())
@@ -50,6 +51,7 @@ public class JwtService implements TokenServicePort {
                 .expired(false)
                 .revoked(false)
                 .tokenType(Token.TokenType.BEARER)
+                .tokenPurpose(purpose)
                 .build();
     }
 

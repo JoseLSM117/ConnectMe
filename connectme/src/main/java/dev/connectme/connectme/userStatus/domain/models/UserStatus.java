@@ -27,6 +27,4 @@ public class UserStatus {
     @NotNull(message = "Last seen date cannot be null")
     @PastOrPresent(message = "Last seen date must be in the past or present")
     private Date lastSeen;
-
-    private User user;
 }

@@ -1,6 +1,5 @@
 package dev.connectme.connectme.user.infrastructure.repositories;
 
-import dev.connectme.connectme.phone.domain.models.Phone;
 import dev.connectme.connectme.phone.infrastructure.entities.PhoneEntity;
 import dev.connectme.connectme.user.domain.models.User;
 import dev.connectme.connectme.user.infrastructure.entities.UserEntity;
@@ -21,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class JpaRepositoryAdapterTest {
+public class JpaUserRepositoryAdapterTest {
     @Mock
     private JpaUserRepository jpaUserRepository;
 
@@ -85,7 +84,6 @@ public class JpaRepositoryAdapterTest {
         assertEquals(userStored.getFirstName(), "jose");
         assertEquals(userStored.getLastName(), "sanchez");
         assertEquals(userStored.getUserStatus().getStatusName(), UserStatus.StatusName.Active);
-        assertEquals(userStored.getPhone().getNumber(), "5569382066");
 
         verify(jpaUserRepository, times(1)).save(any(UserEntity.class));
     }
@@ -105,7 +103,6 @@ public class JpaRepositoryAdapterTest {
         assertEquals(userFound.getFirstName(), "jose");
         assertEquals(userFound.getLastName(), "sanchez");
         assertEquals(userFound.getUserStatus().getStatusName(), UserStatus.StatusName.Active);
-        assertEquals(userFound.getPhone().getNumber(), "5569382066");
     }
 
     @Test
@@ -121,6 +118,5 @@ public class JpaRepositoryAdapterTest {
         assertEquals(userFound.getFirstName(), "jose");
         assertEquals(userFound.getLastName(), "sanchez");
         assertEquals(userFound.getUserStatus().getStatusName(), UserStatus.StatusName.Active);
-        assertEquals(userFound.getPhone().getNumber(), "5569382066");
     }
 }
